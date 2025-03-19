@@ -3,6 +3,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
@@ -349,6 +350,22 @@ namespace r.e.p.o_cheat
                 NoclipController.UpdateMovement();
             }
         }
+
+        public void OnEnable()
+        {
+             SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        
+        public void OnDisable()
+        {
+             SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+        
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            ReapplyStaminaSettings();
+        }
+        
         private void TryLockCamera()
         {
             if (InputManager.instance != null)
